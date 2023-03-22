@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="product-detail">
+        <div class="product-image">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        </div>
+        <div class="product-info">
+            <h2>{{ product.name }}</h2>
+            <p class="description">{{ product.description }}</p>
+            <p class="price">{{ product.price }} coins</p>
+            {% if user.is_authenticated %}
+                {% if user == product.seller %}
+                    <p>You are the seller of this product</p>
+                {% else %}
+                    {% if user.userprofile.coins >= product.price %}
+                        <form action="{% url 'buy_product' product.pk %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Buy">
+                        </form>
+                    {% else %}
+                        <p>You do not have enough coins to buy this product</p>
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                <p>Please <a href="{% url 'login' %}">login</a> to buy this product</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

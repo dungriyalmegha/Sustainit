@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Checkout</h1>
+    {% if cart %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>${{ item.product.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.quantity|mul:item.product.price }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="3">Total:</th>
+                    <td>${{ cart|total }}</td>
+                </tr>
+            </tfoot>
+        </table>
+        <hr>
+        <h3>Shipping Address</h3>
+        {% if addresses %}
+            <form method="POST" action="{% url 'checkout' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <select name="address" class="form-control">
+                        {% for address in addresses %}
+                            <option value="{{ address.pk }}">{{ address.street_address }}, {{ address.city }}, {{ address.state }}, {{ address.country }}, {{ address.zip_code }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Place Order</button>
+                </div>
+            </form>
+        {% else %}
+            <p>You haven't added a shipping address yet. Please <a href="{% url 'add_shipping_address' %}">add one</a>.</p>
+        {% endif %}
+    {% else %}
