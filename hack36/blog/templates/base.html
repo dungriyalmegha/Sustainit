@@ -1,28 +1,280 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}My Website{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>SustainIt - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            background-color: rgb(234, 245, 239);
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            font-family: "Bahnschrift Semilight", Arial, sans-serif;
+        }
+
+        .logo-bar {
+            background-color: #4CAF50;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-box {
+            margin-right: 10px;
+        }
+
+        .sustainability-info {
+            text-align: left;
+            color: black;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .search-bar {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 4px;
+            background-color: #ffffff;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .products {
+            margin-top: 20px;
+            font-style: italic;
+            text-align: left;
+        }
+
+        .product-item {
+            display: inline-block;
+            width: 200px;
+            margin: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #754646;
+            text-align: center;
+        }
+
+        .product-item img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+        }
+
+        .product-item .product-name {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .product-item .product-price {
+            margin-top: 5px;
+            color: #4CAF50;
+        }
+
+        .product-item .product-info {
+            display: none;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .product-item .buy-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .product-item .add-to-cart-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4287f5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .footer img {
+            width: 20px;
+            height: 20px;
+            margin: 5px;
+        }
+
+        .go-local {
+            margin-top: 20px;
+            background-color: hsl(143, 78%, 22%);
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .go-local-text {
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        .logo-footer {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'add_product' %}">Add Product</a></li>
-                <li><a href="{% url 'add_shipping_address' %}">Add Shipping Address</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-    
-    <footer>
-        &copy; My Website {{ year }}
-    </footer>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo-bar">
+                    <div class="logo-box">
+                        <div class="logo">SustainIt</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="profile-button" onclick="goToProfile()">Profile</button>
+                <button class="sell-button" onclick="goToSell()">Sell</button>
+            </div>
+        </div>
+        <input type="text" class="search-bar" placeholder="Search...">
+        <div class="sustainability-info">
+            <p>SustainIt is a revolutionary online platform where you sell, swap, and save by giving your old treasures a new life! Recycle your used items and earn coins to buy incredible handcrafted goods from local artisans.</p>
+        </div>
+        <hr>
+        <h2 class="products">Products</h2>
+        <div class="product-item" onclick="showProductInfo(this)">
+            <img src="pots.jpg" alt="Product 1">
+            <div class="product-name">Product 1</div>
+            <div class="product-price">$20</div>
+            <div class="product-info">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut auctor sapien eget augue mollis, at dapibus ligula pharetra. Integer et enim posuere, ultrices nunc ac, ullamcorper neque.
+            </div>
+            <button class="buy-button">Buy</button>
+            <button class="add-to-cart-button">Add to Cart</button>
+        </div>
+        <div class="product-item" onclick="showProductInfo(this)">
+            <img src="homedecor.jpg" alt="Product 2">
+            <div class="product-name">Product 2</div>
+            <div class="product-price">$30</div>
+            <div class="product-info">
+                Fusce sed justo quis magna cursus consectetur. Mauris commodo magna eget cursus convallis. Curabitur vitae nulla id tellus elementum vestibulum eget id ex.
+            </div>
+            <button class="buy-button">Buy</button>
+            <button class="add-to-cart-button">Add to Cart</button>
+        </div>
+        <!-- Add more product items as needed -->
+        <div class="product-item" onclick="showProductInfo(this)">
+            <img src="product3.jpg" alt="Product 3">
+            <div class="product-name">Product 3</div>
+            <div class="product-price">$25</div>
+            <div class="product-info">
+                Nulla facilisi. Sed dignissim ultricies felis, vitae scelerisque leo tristique non. Suspendisse eu dui sed nisl efficitur interdum.
+            </div>
+            <button class="buy-button">Buy</button>
+            <button class="add-to-cart-button">Add to Cart</button>
+        </div>
+        <div class="product-item" onclick="showProductInfo(this)">
+            <img src="product4.jpg" alt="Product 4">
+            <div class="product-name">Product 4</div>
+            <div class="product-price">$40</div>
+            <div class="product-info">
+                Quisque in turpis efficitur, dignissim nunc ut, tincidunt risus. Suspendisse ullamcorper turpis et dolor ultrices convallis.
+            </div>
+            <button class="buy-button">Buy</button>
+            <button class="add-to-cart-button">Add to Cart</button>
+        </div>
+        <div class="product-item" onclick="showProductInfo(this)">
+            <img src="product5.jpg" alt="Product 5">
+            <div class="product-name">Product 5</div>
+            <div class="product-price">$15</div>
+            <div class="product-info">
+                Duis sit amet diam nec felis fringilla tincidunt id eget nunc. Nulla sit amet commodo odio, vitae suscipit urna.
+            </div>
+            <button class="buy-button">Buy</button>
+            <button class="add-to-cart-button">Add to Cart</button>
+        </div>
+        <div class="product-item" onclick="showProductInfo(this)">
+            <img src="product6.jpg" alt="Product 6">
+            <div class="product-name">Product 6</div>
+            <div class="product-price">$50</div>
+            <div class="product-info">
+                Vestibulum nec est ac sapien sollicitudin semper. Fusce aliquam purus a orci eleifend placerat.
+            </div>
+            <button class="buy-button">Buy</button>
+            <button class="add-to-cart-button">Add to Cart</button>
+        </div>
+        <hr>
+        <div class="go-local">
+            <h3 class="go-local-text">Go Local</h3>
+            <img src="instagram.png" alt="Instagram" onclick="goToInstagram()">
+            <img src="linkedin.png" alt="LinkedIn" onclick="goToLinkedIn()">
+            <img src="github.png" alt="GitHub" onclick="goToGitHub()">
+        </div>
+        <img class="logo-footer" src="logo.png" alt="SustainIt Logo">
+    </div>
+
+    <script>
+        function goToProfile() {
+            // Implement your logic to navigate to the profile page
+        }
+        
+        function goToSell() {
+            // Implement your logic to navigate to the sell page
+        }
+        
+        function showProductInfo(product) {
+            var info = product.getElementsByClassName("product-info")[0];
+            info.style.display = "block";
+        }
+        
+        function goToInstagram() {
+            // Implement your logic to navigate to Instagram profile
+        }
+        
+        function goToLinkedIn() {
+            // Implement your logic to navigate to LinkedIn profile
+        }
+        
+        function goToGitHub() {
+            // Implement your logic to navigate to GitHub profile
+        }
+    </script>
 </body>
 </html>
